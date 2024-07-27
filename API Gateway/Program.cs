@@ -13,6 +13,7 @@ namespace API_Gateway
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
             var app = builder.Build();
 
@@ -27,8 +28,9 @@ namespace API_Gateway
 
             app.UseAuthorization();
 
-
             app.MapControllers();
+
+            app.MapReverseProxy();
 
             app.Run();
         }
